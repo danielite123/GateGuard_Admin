@@ -80,7 +80,12 @@ export default function Nav({ openNav, onCloseNav }) {
         },
       }}
     >
-      <Logo sx={{ mt: 3, ml: 4 }} />
+      <Box display="flex" alignItems="center">
+        <Logo sx={{ mt: 3, ml: 4 }} />
+        <Typography variant="body1" sx={{ marginLeft: 1, fontSize: '14px', mt: 3 }}>
+          GateGuard Bolt
+        </Typography>
+      </Box>
 
       {renderAccount}
 

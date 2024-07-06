@@ -20,10 +20,10 @@ export default function UserTableRow({
   selected,
   name,
   avatarUrl,
-  company,
+  email,
+  phone,
+  // isVerified,
   role,
-  isVerified,
-  status,
   handleClick,
 }) {
   const [open, setOpen] = useState(null);
@@ -38,7 +38,7 @@ export default function UserTableRow({
 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
+      <TableRow hover tabIndex={-1} phone="checkbox" selected={selected}>
         <TableCell padding="checkbox">
           <Checkbox disableRipple checked={selected} onChange={handleClick} />
         </TableCell>
@@ -52,14 +52,14 @@ export default function UserTableRow({
           </Stack>
         </TableCell>
 
-        <TableCell>{company}</TableCell>
+        <TableCell>{email}</TableCell>
 
-        <TableCell>{role}</TableCell>
+        <TableCell>{phone}</TableCell>
 
-        <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell>
+        {/* <TableCell align="center">{isVerified ? 'Yes' : 'No'}</TableCell> */}
 
         <TableCell>
-          <Label color={(status === 'banned' && 'error') || 'success'}>{status}</Label>
+          <Label color={(role === 'banned' && 'error') || 'success'}>{role}</Label>
         </TableCell>
 
         <TableCell align="right">
@@ -95,11 +95,11 @@ export default function UserTableRow({
 
 UserTableRow.propTypes = {
   avatarUrl: PropTypes.any,
-  company: PropTypes.any,
+  email: PropTypes.any,
   handleClick: PropTypes.func,
-  isVerified: PropTypes.any,
+  // isVerified: PropTypes.any,
   name: PropTypes.any,
-  role: PropTypes.any,
+  phone: PropTypes.any,
   selected: PropTypes.any,
-  status: PropTypes.string,
+  role: PropTypes.string,
 };

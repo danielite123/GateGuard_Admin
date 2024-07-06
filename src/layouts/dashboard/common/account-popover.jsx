@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -43,10 +44,21 @@ export default function AccountPopover() {
     setOpen(null);
   };
 
-  const handleLogout = () => {
-    handleClose();
-    // Perform any logout logic here, such as clearing tokens, etc.
-    navigate('/login'); // Navigate to the login page
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get('https://gateguard-backend.onrender.com/api/user/logout');
+      if (response.status === 200) {
+        // Clear token from localStorage or sessionStorage
+        localStorage.removeItem('token');
+
+        // Redirect to login page
+        navigate('/login');
+      } else {
+        console.error('Logout failed');
+      }
+    } catch (error) {
+      console.error('Logout failed', error);
+    }
   };
 
   return (

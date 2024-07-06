@@ -1,4 +1,7 @@
+import axios from 'axios';
 import { useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -28,20 +31,56 @@ export default function LoginView() {
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const handleClick = () => {
-    router.push('/dashboard');
+  const handleClick = async () => {
+    try {
+      const response = await axios.post(
+        'https://gateguard-backend.onrender.com/api/user/admin/login',
+        {
+          email,
+          password,
+        }
+      );
+      const { token } = response.data;
+      // Save the token to localStorage or sessionStorage
+      localStorage.setItem('token', token);
+      // Optionally, you can trigger any callback or state update on successful login
+
+      // Redirect to another page after successful login
+
+      router.push('/');
+
+      toast.success('Login successful');
+
+      console.log(toast.sucess);
+    } catch (error) {
+      // Handle error responses from the server
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error('Failed to login. Please try again later.');
+      }
+    }
   };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          name="email"
+          label="Email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
         <TextField
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -83,6 +122,7 @@ export default function LoginView() {
         height: 1,
       }}
     >
+      <ToastContainer />
       <Logo
         sx={{
           position: 'fixed',

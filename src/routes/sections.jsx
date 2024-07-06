@@ -1,6 +1,8 @@
 import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
+import { isLoggedIn } from 'src/utils/auth';
+
 import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
@@ -13,6 +15,7 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 // ----------------------------------------------------------------------
 
 export default function Router() {
+  const loggedIn = isLoggedIn();
   const routes = useRoutes([
     {
       element: (
@@ -24,14 +27,14 @@ export default function Router() {
       ),
       children: [
         { element: <IndexPage />, index: true },
-        { path: 'user', element: <UserPage /> },
-        { path: 'drivers', element: <DriverPage /> },
-        { path: 'orders', element: <OrderPage /> },
+        { path: 'user', element: loggedIn ? <UserPage /> : <Navigate to="/login" replace /> },
+        { path: 'drivers', element: loggedIn ? <DriverPage /> : <Navigate to="/login" replace /> },
+        { path: 'orders', element: loggedIn ? <OrderPage /> : <Navigate to="/login" replace /> },
       ],
     },
     {
       path: 'login',
-      element: <LoginPage />,
+      element: loggedIn ? <Navigate to="/" replace /> : <LoginPage />,
     },
     {
       path: '404',

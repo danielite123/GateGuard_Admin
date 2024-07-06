@@ -26,7 +26,7 @@ export default function Router() {
         </DashboardLayout>
       ),
       children: [
-        { element: <IndexPage />, index: true },
+        { element: loggedIn ? <IndexPage /> : <Navigate to="/login" replace />, index: true },
         { path: 'user', element: loggedIn ? <UserPage /> : <Navigate to="/login" replace /> },
         { path: 'drivers', element: loggedIn ? <DriverPage /> : <Navigate to="/login" replace /> },
         { path: 'orders', element: loggedIn ? <OrderPage /> : <Navigate to="/login" replace /> },

@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
+import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -14,8 +15,6 @@ import { RouterLink } from 'src/routes/components';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { account } from 'src/_mock/account';
-
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
 
@@ -26,8 +25,36 @@ import navConfig from './config-navigation';
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
+  const [account, setAccount] = useState(null);
 
   const upLg = useResponsive('up', 'lg');
+
+  useEffect(() => {
+    // Fetch user data from the token in localStorage
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // Handle case where token is not available (e.g., not logged in)
+          return;
+        }
+
+        // Fetch user data using the token
+        const response = await axios.get('https://gateguard-backend.onrender.com/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Update state with user data
+        setAccount(response.data.user);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   useEffect(() => {
     if (openNav) {
@@ -35,6 +62,14 @@ export default function Nav({ openNav, onCloseNav }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  // Ensure account is available before rendering
+  if (!account) {
+    return null; // Render nothing until user data is fetched
+  }
+
+  // Ensure name and email are available before rendering
+  const { name, role, profilePic } = account;
 
   const renderAccount = (
     <Box
@@ -49,13 +84,13 @@ export default function Nav({ openNav, onCloseNav }) {
         bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
       }}
     >
-      <Avatar src={account.photoURL} alt="photoURL" />
+      <Avatar src={profilePic} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="subtitle2">{name}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account.role}
+          {role}
         </Typography>
       </Box>
     </Box>

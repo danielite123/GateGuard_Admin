@@ -1,4 +1,5 @@
 import axios from 'axios'; // Import Axios for making HTTP requests
+import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 
 import Card from '@mui/material/Card';
@@ -34,13 +35,31 @@ export default function UserPage() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        // Retrieve the token from localStorage
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          throw new Error('No token found. Please login first.');
+        }
+
         const response = await axios.get(
-          'https://gateguard-backend.onrender.com/api/user/get-all-users'
+          'https://gateguard-backend.onrender.com/user/get-all-users',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         ); // Adjust the endpoint based on your backend API
+
         setUsers(response.data.users); // Update users state with fetched data
       } catch (error) {
         console.error('Error fetching users:', error);
         // Handle error state or notifications
+        if (error.response) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error('Failed to fetch users. Please try again later.');
+        }
       }
     };
 

@@ -36,25 +36,26 @@ export default function LoginView() {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post(
-        'https://gateguard-backend.onrender.com/api/user/admin/login',
-        {
-          email,
-          password,
-        }
-      );
-      const { token } = response.data;
-      // Save the token to localStorage or sessionStorage
+      const response = await axios.post('https://gateguard-backend.onrender.com/user/admin/login', {
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      // Clear any existing token and user data
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+
+      // Save the new token and user data
       localStorage.setItem('token', token);
-      // Optionally, you can trigger any callback or state update on successful login
+      localStorage.setItem('user', JSON.stringify(user));
 
       // Redirect to another page after successful login
-
       router.push('/');
 
+      // Display success message
       toast.success('Login successful');
-
-      console.log(toast.sucess);
     } catch (error) {
       // Handle error responses from the server
       if (error.response) {

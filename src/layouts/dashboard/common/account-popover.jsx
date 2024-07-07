@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -8,12 +8,8 @@ import Divider from '@mui/material/Divider';
 import Popover from '@mui/material/Popover';
 import { alpha } from '@mui/material/styles';
 import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-
-import { account } from 'src/_mock/account';
-
-// ----------------------------------------------------------------------
+import Typography from '@mui/material/Typography';
 
 const MENU_OPTIONS = [
   {
@@ -30,11 +26,37 @@ const MENU_OPTIONS = [
   },
 ];
 
-// ----------------------------------------------------------------------
-
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const [account, setAccount] = useState(null); // State to hold user data
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch user data from the token in localStorage
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          // Handle case where token is not available (e.g., not logged in)
+          return;
+        }
+
+        // Fetch user data using the token
+        const response = await axios.get('https://gateguard-backend.onrender.com/user/profile', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Update state with user data
+        setAccount(response.data.user);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
+
+    fetchUserData();
+  }, []); // Empty dependency array ensures useEffect runs only once on mount
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -46,10 +68,11 @@ export default function AccountPopover() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get('https://gateguard-backend.onrender.com/api/user/logout');
+      const response = await axios.get('https://gateguard-backend.onrender.com/user/logout');
       if (response.status === 200) {
         // Clear token from localStorage or sessionStorage
         localStorage.removeItem('token');
+        localStorage.removeItem('user'); // Optionally remove user data
 
         // Redirect to login page
         navigate('/login');
@@ -60,6 +83,14 @@ export default function AccountPopover() {
       console.error('Logout failed', error);
     }
   };
+
+  // Ensure account is available before rendering
+  if (!account) {
+    return null; // Render nothing until user data is fetched
+  }
+
+  // Ensure name and email are available before rendering
+  const { name, email, profilePic } = account;
 
   return (
     <>
@@ -76,15 +107,15 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src={profilePic}
+          alt={name}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {name && name.charAt(0).toUpperCase()} {/* Safely access name */}
         </Avatar>
       </IconButton>
 
@@ -105,10 +136,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {email}
           </Typography>
         </Box>
 

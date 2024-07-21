@@ -90,7 +90,7 @@ export default function AccountPopover() {
   }
 
   // Ensure name and email are available before rendering
-  const { name, email, profilePic } = account;
+  const { fullname, email, profilePic } = account;
 
   return (
     <>
@@ -108,14 +108,14 @@ export default function AccountPopover() {
       >
         <Avatar
           src={profilePic}
-          alt={name}
+          alt={fullname}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {name && name.charAt(0).toUpperCase()} {/* Safely access name */}
+          {fullname && fullname.charAt(0).toUpperCase()} {/* Safely access name */}
         </Avatar>
       </IconButton>
 
@@ -136,7 +136,7 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {name}
+            {fullname}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
             {email}

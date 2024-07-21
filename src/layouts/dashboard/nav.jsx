@@ -69,7 +69,7 @@ export default function Nav({ openNav, onCloseNav }) {
   }
 
   // Ensure name and email are available before rendering
-  const { name, role, profilePic } = account;
+  const { fullname, profilePic } = account;
 
   const renderAccount = (
     <Box
@@ -87,10 +87,8 @@ export default function Nav({ openNav, onCloseNav }) {
       <Avatar src={profilePic} alt="photoURL" />
 
       <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{name}</Typography>
-
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {role}
+        <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+          {fullname}
         </Typography>
       </Box>
     </Box>

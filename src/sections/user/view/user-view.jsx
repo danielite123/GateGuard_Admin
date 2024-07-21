@@ -1,18 +1,17 @@
 import axios from 'axios'; // Import Axios for making HTTP requests
 import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Table from '@mui/material/Table';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import Typography from '@mui/material/Typography';
 import TableContainer from '@mui/material/TableContainer';
 import TablePagination from '@mui/material/TablePagination';
 
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import TableNoData from '../table-no-data';
@@ -124,9 +123,6 @@ export default function UserPage() {
     <Container>
       <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
         <Typography variant="h4">Users</Typography>
-        <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
-          New User
-        </Button>
       </Stack>
 
       <Card>
@@ -147,7 +143,7 @@ export default function UserPage() {
                 onRequestSort={handleSort}
                 onSelectAllClick={handleSelectAllClick}
                 headLabel={[
-                  { id: 'name', label: 'Name' },
+                  { id: 'fullname', label: 'FullName' },
                   { id: 'email', label: 'Email' },
                   { id: 'phone', label: 'PhoneNo' },
                   // { id: 'isVerified', label: 'Verified', align: 'center' },
@@ -161,7 +157,7 @@ export default function UserPage() {
                   .map((row) => (
                     <UserTableRow
                       key={row.id}
-                      name={row.name}
+                      name={row.fullname}
                       role={row.role}
                       phone={row.phone}
                       email={row.email}

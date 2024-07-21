@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { toast, ToastContainer } from 'react-toastify';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -123,7 +123,6 @@ export default function LoginView() {
         height: 1,
       }}
     >
-      <ToastContainer />
       <Logo
         sx={{
           position: 'fixed',

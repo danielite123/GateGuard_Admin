@@ -8,7 +8,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title> Login | GateGuard </title>
+        <title> Login | Num Ride </title>
       </Helmet>
 
       <LoginView />

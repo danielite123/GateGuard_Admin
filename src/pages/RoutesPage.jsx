@@ -1,17 +1,17 @@
 import { Helmet } from 'react-helmet-async';
 
-import { AppView } from 'src/sections/overview/view';
+import { AdminRouteManager } from 'src/sections/routes';
 
 // ----------------------------------------------------------------------
 
-export default function AppPage() {
+export default function NotFoundPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Num Ride </title>
+        <title> Route Manager | Num Ride</title>
       </Helmet>
 
-      <AppView />
+      <AdminRouteManager />
     </>
   );
 }

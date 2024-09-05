@@ -145,7 +145,7 @@ export default function LoginView() {
             }}
             variant="h4"
           >
-            Sign in to GateGuard
+            Sign in to Num Ride
           </Typography>
 
           <Stack direction="row" spacing={2}>

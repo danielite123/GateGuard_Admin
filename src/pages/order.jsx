@@ -8,7 +8,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Order | GateGuard </title>
+        <title> Order | Num Ride </title>
       </Helmet>
 
       <OrderView />

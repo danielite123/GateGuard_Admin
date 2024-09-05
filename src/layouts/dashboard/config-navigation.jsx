@@ -27,6 +27,11 @@ const navConfig = [
     path: '/orders',
     icon: icon('ic_blog'),
   },
+  {
+    title: 'routes',
+    path: '/routes',
+    icon: icon('ic_blog'),
+  },
 ];
 
 export default navConfig;

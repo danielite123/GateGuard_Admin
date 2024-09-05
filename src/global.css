@@ -1,2 +1,111 @@
 /* scrollbar */
 @import 'simplebar-react/dist/simplebar.min.css';
+
+.container {
+  padding-right: 80px;
+  padding-left: 80px;
+}
+
+.route-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 12px; /* Adjusted for better readability on smaller screens */
+}
+
+.route-table th,
+.route-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.route-table th {
+  background-color: #f2f2f2;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #1976d2;
+}
+
+.delete-btn {
+  background-color: #d32f2f;
+}
+
+.edit-btn:hover {
+  background-color: #1565c0;
+}
+
+.delete-btn:hover {
+  background-color: #c62828;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .route-table,
+  .route-table thead,
+  .route-table tbody,
+  .route-table th,
+  .route-table td,
+  .route-table tr {
+    display: block;
+  }
+
+  .route-table th {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .route-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #ddd; /* Add a border around each row */
+    padding: 10px; /* Optional: add padding for better spacing */
+    border-radius: 5px; /* Optional: round the corners */
+    background-color: #f9f9f9;
+  }
+
+  .route-table td {
+    border: none;
+    position: relative;
+    padding-left: 50%;
+    text-align: left;
+  }
+
+  .route-table td:before {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  .route-table td:nth-of-type(1):before {
+    content: 'From';
+  }
+
+  .route-table td:nth-of-type(2):before {
+    content: 'To';
+  }
+
+  .route-table td:nth-of-type(3):before {
+    content: 'Distance (km)';
+  }
+
+  .route-table td:nth-of-type(4):before {
+    content: 'Price (#)';
+  }
+
+  .route-table td:nth-of-type(5):before {
+    content: 'Actions';
+  }
+}

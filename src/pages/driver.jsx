@@ -8,7 +8,7 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Driver | GateGuard </title>
+        <title> Driver | Num Ride </title>
       </Helmet>
 
       <DriverView />

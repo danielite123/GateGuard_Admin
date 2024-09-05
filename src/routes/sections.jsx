@@ -7,6 +7,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const OrderPage = lazy(() => import('src/pages/order'));
+export const RoutesPage = lazy(() => import('src/pages/RoutesPage'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const DriverPage = lazy(() => import('src/pages/driver'));
@@ -30,6 +31,7 @@ export default function Router() {
         { path: 'user', element: loggedIn ? <UserPage /> : <Navigate to="/login" replace /> },
         { path: 'drivers', element: loggedIn ? <DriverPage /> : <Navigate to="/login" replace /> },
         { path: 'orders', element: loggedIn ? <OrderPage /> : <Navigate to="/login" replace /> },
+        { path: 'routes', element: loggedIn ? <RoutesPage /> : <Navigate to="/login" replace /> },
       ],
     },
     {

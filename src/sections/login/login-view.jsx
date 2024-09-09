@@ -36,7 +36,7 @@ export default function LoginView() {
 
   const handleClick = async () => {
     try {
-      const response = await axios.post('https://gateguard-backend.onrender.com/user/admin/login', {
+      const response = await axios.post('http://localhost:5000/user/admin/login', {
         email,
         password,
       });

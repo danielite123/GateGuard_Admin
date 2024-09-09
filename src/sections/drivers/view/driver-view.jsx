@@ -42,14 +42,11 @@ export default function DriverPage() {
           throw new Error('No token found. Please login first.');
         }
 
-        const response = await axios.get(
-          'https://gateguard-backend.onrender.com/driver/get-all-drivers',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ); // Adjust the endpoint based on your backend API
+        const response = await axios.get('http://localhost:5000/driver/get-all-drivers', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }); // Adjust the endpoint based on your backend API
 
         setUsers(response.data.users); // Update users state with fetched data
       } catch (error) {

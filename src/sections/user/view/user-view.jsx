@@ -41,14 +41,11 @@ export default function UserPage() {
           throw new Error('No token found. Please login first.');
         }
 
-        const response = await axios.get(
-          'https://gateguard-backend.onrender.com/user/get-all-users',
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        ); // Adjust the endpoint based on your backend API
+        const response = await axios.get('http://localhost:5000/user/get-all-users', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }); // Adjust the endpoint based on your backend API
 
         setUsers(response.data.users); // Update users state with fetched data
       } catch (error) {

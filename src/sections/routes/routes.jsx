@@ -12,7 +12,7 @@ export default function AdminRouteManager() {
   useEffect(() => {
     // Fetch all routes
     const fetchRoutes = async () => {
-      const response = await axios.get('https://gateguard-backend.onrender.com/routes');
+      const response = await axios.get('http://localhost:5000/routes');
       setRoutes(response.data.routes);
     };
     fetchRoutes();
@@ -20,13 +20,13 @@ export default function AdminRouteManager() {
 
   const handleSubmit = async () => {
     if (editMode) {
-      await axios.put(`https://gateguard-backend.onrender.com/routes/${editId}`, form);
+      await axios.put(`http://localhost:5000/routes/${editId}`, form);
     } else {
-      await axios.post('https://gateguard-backend.onrender.com/routes/create', form);
+      await axios.post('http://localhost:5000/routes/create', form);
     }
 
     // Refresh routes
-    const response = await axios.get('https://gateguard-backend.onrender.com/routes');
+    const response = await axios.get('http://localhost:5000/routes');
     setRoutes(response.data.routes);
 
     // Reset form
@@ -42,9 +42,9 @@ export default function AdminRouteManager() {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://gateguard-backend.onrender.com/routes/${id}`);
+    await axios.delete(`http://localhost:5000/routes/${id}`);
     // Refresh routes
-    const response = await axios.get('https://gateguard-backend.onrender.com/routes');
+    const response = await axios.get('http://localhost:5000/routes');
     setRoutes(response.data.routes);
   };
 
